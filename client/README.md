@@ -7,6 +7,7 @@ React + Vite frontend for the WorkOS take-home assignment.
 - [React](https://react.dev/) + [Vite](https://vite.dev/)
 - [Radix Themes](https://www.radix-ui.com/themes) for accessible UI primitives
 - [Tailwind CSS](https://tailwindcss.com/) for utility styling
+- [Storybook](https://storybook.js.org/) for component development
 
 ## Getting started
 
@@ -34,3 +35,5 @@ The app runs at `http://localhost:5173`. API requests to `/users` and `/roles` a
 - `npm run build` — type-check and build for production
 - `npm run preview` — preview the production build
 - `npm run lint` — run ESLint
+- `npm run storybook` — start Storybook at `http://localhost:6006`
+- `npm run build-storybook` — build Storybook for static hosting
