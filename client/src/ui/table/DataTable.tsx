@@ -65,7 +65,10 @@ export function DataTable({ model, isLoading = false, ...rootProps }: DataTableP
             model.rows.map((row) => (
               <RadixTable.Row key={row.id}>
                 {row.cells.map((cell, index) => (
-                  <RadixTable.Cell key={`${row.id}-${index}`}>
+                  <RadixTable.Cell
+                    key={`${row.id}-${index}`}
+                    py={cell.kind === 'user' ? '2' : undefined}
+                  >
                     <TableCellContent cell={cell} />
                   </RadixTable.Cell>
                 ))}

@@ -17,7 +17,7 @@ export function UserCell({ name, imageUrl }: UserTableCell) {
       <Avatar
         src={imageUrl}
         fallback={getInitials(name)}
-        size="2"
+        size="1"
         radius="full"
         alt=""
       />
