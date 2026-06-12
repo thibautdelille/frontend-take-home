@@ -38,4 +38,9 @@ export {
 } from './table'
 export { Container, type ContainerProps } from './container'
 export { SearchField, type SearchFieldProps } from './search'
+export {
+  UserFormModal,
+  type UserFormModalProps,
+  type UserFormModalRole,
+} from './user-form'
 export { containerWidth, spacing, type Spacing } from './layout/spacing'
