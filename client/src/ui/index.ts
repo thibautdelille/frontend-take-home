@@ -38,4 +38,5 @@ export {
   type UserTableCell,
 } from './table'
 export { Container, type ContainerProps } from './container'
+export { SearchField, type SearchFieldProps } from './search'
 export { containerWidth, spacing, type Spacing } from './layout/spacing'

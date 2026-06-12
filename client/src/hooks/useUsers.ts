@@ -1,4 +1,4 @@
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
+import { keepPreviousData, useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { userKeys, type ListParams } from '../api/query-keys'
 import { createUser, deleteUser, getUser, getUsers, updateUser } from '../api/users'
 import type { CreateUserInput, UpdateUserInput } from '../api/types'
@@ -7,6 +7,7 @@ export function useUsers(params?: ListParams) {
   return useQuery({
     queryKey: userKeys.list(params),
     queryFn: () => getUsers(params),
+    placeholderData: keepPreviousData,
   })
 }
 
