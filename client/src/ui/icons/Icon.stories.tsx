@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
-import { Button, IconButton } from '@radix-ui/themes'
+import { Button, IconButton } from '../button'
 import { Icon } from './Icon'
 
 const meta = {
@@ -26,19 +26,14 @@ export const MagnifyingGlass: Story = {
 
 export const WithButton: Story = {
   render: () => (
-    <Button>
-      <Icon name="plus" />
+    <Button variant="primary" icon="plus">
       Add user
     </Button>
   ),
 }
 
 export const IconOnly: Story = {
-  render: () => (
-    <IconButton variant="ghost" aria-label="User actions">
-      <Icon name="dotsHorizontal" />
-    </IconButton>
-  ),
+  render: () => <IconButton icon="dotsHorizontal" label="User actions" />,
 }
 
 export const WithAccessibleLabel: Story = {

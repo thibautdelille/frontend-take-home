@@ -3,6 +3,8 @@ export const textToneClasses = {
   secondary: 'text-secondary',
   placeholder: 'text-placeholder',
   disabled: 'text-disabled',
+  danger: 'text-danger',
+  inverse: 'text-inverse',
 } as const
 
 export type TextTone = keyof typeof textToneClasses
@@ -17,6 +19,3 @@ export const borderClasses = {
   default: 'border-default',
   input: 'border-input',
 } as const
-
-/** @deprecated Use textToneClasses */
-export const textColorClasses = textToneClasses

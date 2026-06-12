@@ -3,6 +3,8 @@
   --color-text-secondary: var(--semantic-text-secondary);
   --color-text-placeholder: var(--semantic-text-placeholder);
   --color-text-disabled: var(--semantic-text-disabled);
+  --color-text-danger: var(--semantic-text-danger);
+  --color-text-inverse: var(--semantic-text-inverse);
   --color-surface: var(--semantic-bg-surface);
   --color-subtle: var(--semantic-bg-subtle);
   --color-border: var(--semantic-border-default);
@@ -26,11 +28,15 @@
   --gray-a9: rgba(0, 4, 29, 0.46);
   --gray-a11: rgba(0, 7, 19, 0.62);
 
+  --red-11: #C10030DB;
+
   /* Semantic aliases */
   --semantic-text-primary: var(--gray-12);
   --semantic-text-secondary: var(--gray-a11);
   --semantic-text-placeholder: var(--gray-a9);
   --semantic-text-disabled: var(--gray-a8);
+  --semantic-text-danger: var(--red-11);
+  --semantic-text-inverse: #ffffff;
   --semantic-bg-surface: #ffffff;
   --semantic-bg-subtle: var(--gray-2);
   --semantic-border-default: var(--gray-6);
@@ -43,6 +49,10 @@
   color: var(--semantic-text-primary);
 }
 
+@utility text-inverse {
+  color: var(--semantic-text-inverse);
+}
+
 @utility text-secondary {
   color: var(--semantic-text-secondary);
 }
@@ -53,6 +63,10 @@
 
 @utility text-disabled {
   color: var(--semantic-text-disabled);
+}
+
+@utility text-danger {
+  color: var(--semantic-text-danger);
 }
 
 @utility bg-surface {
