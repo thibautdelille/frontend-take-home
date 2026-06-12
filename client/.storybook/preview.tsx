@@ -2,6 +2,7 @@ import type { Preview } from '@storybook/react-vite'
 import { Theme } from '@radix-ui/themes'
 import '@radix-ui/themes/styles.css'
 import '../src/index.css'
+import { ToastProvider } from '../src/ui/toast'
 
 const preview: Preview = {
   parameters: {
@@ -18,7 +19,9 @@ const preview: Preview = {
   decorators: [
     (Story) => (
       <Theme accentColor="purple" grayColor="gray" radius="medium">
-        <Story />
+        <ToastProvider>
+          <Story />
+        </ToastProvider>
       </Theme>
     ),
   ],

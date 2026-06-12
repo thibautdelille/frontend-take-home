@@ -1,3 +1,4 @@
 @import 'tailwindcss';
 @import './ui/colors/colors.css';
 @import './ui/typography/typography.css';
+@import './ui/toast/toast.css';

@@ -1,0 +1,13 @@
+import { useContext } from 'react'
+import { ToastContext } from './ToastContext'
+import type { UseToastReturn } from './types'
+
+export function useToast(): UseToastReturn {
+  const context = useContext(ToastContext)
+
+  if (!context) {
+    throw new Error('useToast must be used within a ToastProvider')
+  }
+
+  return context
+}
