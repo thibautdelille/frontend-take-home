@@ -97,7 +97,10 @@ export const DataTableUsersWithRowActions: Story = {
         mockUsers,
         userTableColumns((roleId) => roleNames[roleId] ?? roleId),
         (user) => user.id,
-        () => [{ label: 'Delete user', onSelect: () => {} }],
+        () => [
+          { label: 'Edit user', onSelect: () => {} },
+          { label: 'Delete user', onSelect: () => {} },
+        ],
       )}
     />
   ),

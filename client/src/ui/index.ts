@@ -37,6 +37,7 @@ export {
   type UserTableCell,
 } from './table'
 export { Container, type ContainerProps } from './container'
+export { DeleteModal, type DeleteModalProps } from './delete-modal'
 export { SearchField, type SearchFieldProps } from './search'
 export {
   UserFormModal,

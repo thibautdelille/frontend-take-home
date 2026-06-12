@@ -1,15 +1,22 @@
-import { useEffect, useMemo, useState } from 'react'
-import type { CreateUserInput } from '../api/types'
+import { useCallback, useEffect, useMemo, useState } from 'react'
+import type { CreateUserInput, User } from '../api/types'
 import { useRoles } from '../hooks/useRoles'
 import { useDebouncedValue } from '../hooks/useDebouncedValue'
-import { useCreateUser, useUsers } from '../hooks/useUsers'
+import {
+  useCreateUser,
+  useDeleteUser,
+  useUpdateUser,
+  useUsers,
+} from '../hooks/useUsers'
 import { createEmptyUserTableModel, toUserTableModel } from '../tables'
-import { Button, SearchField, spacing, Table, UserFormModal, useToast } from '../ui'
+import { Button, DeleteModal, SearchField, spacing, Table, UserFormModal, useToast } from '../ui'
 import { Flex } from '@radix-ui/themes'
 
 export function TabUser() {
   const [search, setSearch] = useState('')
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false)
+  const [editingUser, setEditingUser] = useState<User | null>(null)
+  const [deletingUser, setDeletingUser] = useState<User | null>(null)
   const debouncedSearch = useDebouncedValue(search.trim(), 300)
 
   const usersQuery = useUsers(
@@ -17,6 +24,8 @@ export function TabUser() {
   )
   const rolesQuery = useRoles()
   const createUserMutation = useCreateUser()
+  const updateUserMutation = useUpdateUser()
+  const deleteUserMutation = useDeleteUser()
 
   const toast = useToast()
 
@@ -32,17 +41,32 @@ export function TabUser() {
     return (roleId: string) => roleNames.get(roleId) ?? roleId
   }, [rolesQuery.data?.data])
 
+  const handleEditUser = useCallback((user: User) => {
+    setEditingUser(user)
+  }, [])
+
+  const handleDeleteUser = useCallback((user: User) => {
+    setDeletingUser(user)
+  }, [])
+
   const userTableModel = useMemo(() => {
     if (!usersQuery.data || !rolesQuery.data) return createEmptyUserTableModel()
-    return toUserTableModel(usersQuery.data.data, getRoleName)
-  }, [usersQuery.data, rolesQuery.data, getRoleName])
-  
+    return toUserTableModel(
+      usersQuery.data.data,
+      getRoleName,
+      (user) => [
+        { label: 'Edit user', onSelect: () => handleEditUser(user) },
+        { label: 'Delete user', onSelect: () => handleDeleteUser(user) },
+      ],
+    )
+  }, [usersQuery.data, rolesQuery.data, getRoleName, handleEditUser, handleDeleteUser])
+
   useEffect(() => {
     if (usersQuery.isError) {
       toast.open({ message: 'Failed to load users', type: 'error' })
     }
-  }, [usersQuery.isError, usersQuery.error])
-  
+  }, [usersQuery.isError, usersQuery.error, toast])
+
   const handleCreateUser = (values: CreateUserInput) => {
     createUserMutation.mutate(values, {
       onSuccess: () => {
@@ -50,10 +74,38 @@ export function TabUser() {
         toast.open({ message: 'User created successfully', type: 'success' })
       },
       onError: () => {
-        toast.open({
-          message: 'Failed to create user',
-          type: 'error'
-        })
+        toast.open({ message: 'Failed to create user', type: 'error' })
+      },
+    })
+  }
+
+  const handleUpdateUser = (values: CreateUserInput) => {
+    if (!editingUser) return
+
+    updateUserMutation.mutate(
+      { id: editingUser.id, input: values },
+      {
+        onSuccess: () => {
+          setEditingUser(null)
+          toast.open({ message: 'User updated successfully', type: 'success' })
+        },
+        onError: () => {
+          toast.open({ message: 'Failed to update user', type: 'error' })
+        },
+      },
+    )
+  }
+
+  const handleConfirmDelete = () => {
+    if (!deletingUser) return
+
+    deleteUserMutation.mutate(deletingUser.id, {
+      onSuccess: () => {
+        setDeletingUser(null)
+        toast.open({ message: 'User deleted successfully', type: 'success' })
+      },
+      onError: () => {
+        toast.open({ message: 'Failed to delete user', type: 'error' })
       },
     })
   }
@@ -62,7 +114,7 @@ export function TabUser() {
     <Flex direction="column" gap={spacing[5]} pt={spacing[5]}>
       <Flex align="center" gap={spacing[4]}>
         <Flex flexGrow="1">
-          <SearchField value={search} onChange={setSearch} className='w-full'/>
+          <SearchField value={search} onChange={setSearch} className="w-full" />
         </Flex>
         <Button
           variant="primary"
@@ -88,6 +140,36 @@ export function TabUser() {
         roles={roles}
         onSubmit={handleCreateUser}
         isSubmitting={createUserMutation.isPending}
+      />
+      <UserFormModal
+        open={Boolean(editingUser)}
+        onOpenChange={(open) => {
+          if (!open) {
+            setEditingUser(null)
+            updateUserMutation.reset()
+          }
+        }}
+        mode="edit"
+        user={editingUser ?? undefined}
+        roles={roles}
+        onSubmit={handleUpdateUser}
+        isSubmitting={updateUserMutation.isPending}
+      />
+      <DeleteModal
+        open={Boolean(deletingUser)}
+        onOpenChange={(open) => {
+          if (!open) {
+            setDeletingUser(null)
+            deleteUserMutation.reset()
+          }
+        }}
+        itemName={
+          deletingUser ? `${deletingUser.first} ${deletingUser.last}` : 'this user'
+        }
+        title="Delete user"
+        confirmLabel="Delete user"
+        onConfirm={handleConfirmDelete}
+        isConfirming={deleteUserMutation.isPending}
       />
     </Flex>
   )
