@@ -1,4 +1,5 @@
 export { Text, type TextProps } from './typography'
+export { Icon, icons, type IconName, type IconProps } from './icons'
 export {
   borderClasses,
   surfaceClasses,
