@@ -53,7 +53,9 @@ export function DataTable({ model, isLoading = false, ...rootProps }: DataTableP
         <RadixTable.Header>
           <RadixTable.Row>
             {model.columns.map((column) => (
-              <ColumnHeaderCell key={column.header}>{column.header}</ColumnHeaderCell>
+              <ColumnHeaderCell key={column.header} minWidth={column.minWidth}>
+                {column.header}
+              </ColumnHeaderCell>
             ))}
             {showActionsColumn && (
               <ColumnHeaderCell aria-label="Actions" />
@@ -67,6 +69,7 @@ export function DataTable({ model, isLoading = false, ...rootProps }: DataTableP
                 {row.cells.map((cell, index) => (
                   <RadixTable.Cell
                     key={`${row.id}-${index}`}
+                    minWidth={model.columns[index]?.minWidth}
                     py={cell.kind === 'user' ? '2' : undefined}
                   >
                     <TableCellContent cell={cell} />

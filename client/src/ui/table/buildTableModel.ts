@@ -11,7 +11,7 @@ export function buildTableModel<T extends Identifiable>(
   getRowActions?: (item: T) => TableRowAction[],
 ): TableModel {
   return {
-    columns: columns.map(({ header }) => ({ header })),
+    columns: columns.map(({ header, minWidth }) => ({ header, minWidth })),
     rows: items.map((item) => ({
       id: getRowId(item),
       cells: columns.map((column) => column.cell(item)),

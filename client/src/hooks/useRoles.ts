@@ -1,4 +1,4 @@
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
+import { keepPreviousData, useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { roleKeys, userKeys, type ListParams } from '../api/query-keys'
 import { createRole, deleteRole, getRole, getRoles, updateRole } from '../api/roles'
 import type { CreateRoleInput, UpdateRoleInput } from '../api/types'
@@ -7,6 +7,7 @@ export function useRoles(params?: ListParams) {
   return useQuery({
     queryKey: roleKeys.list(params),
     queryFn: () => getRoles(params),
+    placeholderData: keepPreviousData,
   })
 }
 

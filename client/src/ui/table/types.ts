@@ -34,6 +34,7 @@ export type TableRow = {
 
 export type TableColumnHeader = {
   header: string
+  minWidth?: string
 }
 
 export type TableModel = {
@@ -43,5 +44,6 @@ export type TableModel = {
 
 export type TableColumn<T> = {
   header: string
+  minWidth?: string
   cell: (item: T) => TableCell
 }

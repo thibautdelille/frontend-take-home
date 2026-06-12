@@ -44,6 +44,7 @@ export {
   type UserFormModalProps,
   type UserFormModalRole,
 } from './user-form'
+export { RoleFormModal, type RoleFormModalProps } from './role-form'
 export {
   ToastProvider,
   useToast,

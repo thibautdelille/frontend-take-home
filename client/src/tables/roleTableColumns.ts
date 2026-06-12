@@ -1,6 +1,20 @@
 import type { Role } from '../api/types'
 import { buildTableModel } from '../ui/table/buildTableModel'
-import type { TableColumn } from '../ui/table/types'
+import type { TableColumn, TableModel, TableRowAction } from '../ui/table/types'
+
+const roleTableHeaders = [
+  { header: 'Name' },
+  { header: 'Description' },
+  { header: 'Created', minWidth: '144px' },
+  { header: 'Default' },
+] as const
+
+export function createEmptyRoleTableModel(): TableModel {
+  return {
+    columns: roleTableHeaders.map((column) => ({ ...column })),
+    rows: [],
+  }
+}
 
 export function roleTableColumns(): TableColumn<Role>[] {
   return [
@@ -19,6 +33,14 @@ export function roleTableColumns(): TableColumn<Role>[] {
       }),
     },
     {
+      header: 'Created',
+      minWidth: '144px',
+      cell: (role) => ({
+        kind: 'date',
+        value: role.createdAt,
+      }),
+    },
+    {
       header: 'Default',
       cell: (role) => ({
         kind: 'string',
@@ -28,6 +50,9 @@ export function roleTableColumns(): TableColumn<Role>[] {
   ]
 }
 
-export function toRoleTableModel(roles: Role[]) {
-  return buildTableModel(roles, roleTableColumns())
+export function toRoleTableModel(
+  roles: Role[],
+  getRowActions?: (role: Role) => TableRowAction[],
+) {
+  return buildTableModel(roles, roleTableColumns(), (role) => role.id, getRowActions)
 }
