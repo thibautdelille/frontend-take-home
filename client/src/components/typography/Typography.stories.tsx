@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
 import { Text } from './Text'
-import { textColorClasses, typographyClasses } from '../../styles/typography'
+import { textToneClasses, typographyClasses } from '../../styles/typography'
 
 const meta = {
   title: 'Design System/Typography',
@@ -32,16 +32,28 @@ export const SizesAndWeights: Story = {
   ),
 }
 
+export const Tones: Story = {
+  render: () => (
+    <div className="flex flex-col gap-4">
+      <Text tone="primary">primary — default body text</Text>
+      <Text tone="secondary">secondary — inactive tab</Text>
+      <Text tone="placeholder">placeholder — search input</Text>
+      <Text tone="disabled">disabled — pagination</Text>
+      <Text color="red">color="red" — destructive actions</Text>
+    </div>
+  ),
+}
+
 export const TailwindUtilities: Story = {
   render: () => (
     <div className="flex flex-col gap-4">
-      <p className={`${typographyClasses.mdBold} ${textColorClasses.primary}`}>
+      <p className={`${typographyClasses.mdBold} ${textToneClasses.primary}`}>
         text-2-bold — md / bold
       </p>
-      <p className={`${typographyClasses.mdNormal} ${textColorClasses.secondary}`}>
+      <p className={`${typographyClasses.mdNormal} ${textToneClasses.secondary}`}>
         text-2-normal — md / normal
       </p>
-      <p className={`${typographyClasses.smBold} ${textColorClasses.disabled}`}>
+      <p className={`${typographyClasses.smBold} ${textToneClasses.disabled}`}>
         text-1-bold — sm / bold
       </p>
     </div>

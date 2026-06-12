@@ -1,10 +1,5 @@
 @theme {
   --font-sans: 'Inter', ui-sans-serif, system-ui, sans-serif;
-
-  --color-text-primary: #2b333b;
-  --color-text-secondary: rgba(0, 7, 19, 0.62);
-  --color-text-placeholder: rgba(0, 4, 29, 0.46);
-  --color-text-disabled: rgba(0, 8, 47, 0.28);
 }
 
 :root {
@@ -48,26 +43,10 @@
   letter-spacing: 0;
 }
 
-@utility text-sm-normal {
+@utility text-1-normal {
   font-family: var(--font-family-sans);
   font-size: var(--text-1-size);
   font-weight: 400;
   line-height: var(--text-1-line-height);
   letter-spacing: 0;
-}
-
-@utility text-primary {
-  color: var(--color-text-primary);
-}
-
-@utility text-secondary {
-  color: var(--color-text-secondary);
-}
-
-@utility text-placeholder {
-  color: var(--color-text-placeholder);
-}
-
-@utility text-disabled {
-  color: var(--color-text-disabled);
 }

@@ -11,7 +11,7 @@ const queryClient = new QueryClient()
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <QueryClientProvider client={queryClient}>
-      <Theme accentColor="indigo" grayColor="slate" radius="medium">
+      <Theme accentColor="purple" grayColor="gray" radius="medium">
         <App />
       </Theme>
     </QueryClientProvider>

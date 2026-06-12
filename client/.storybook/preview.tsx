@@ -17,7 +17,7 @@ const preview: Preview = {
   },
   decorators: [
     (Story) => (
-      <Theme accentColor="indigo" grayColor="slate" radius="medium">
+      <Theme accentColor="purple" grayColor="gray" radius="medium">
         <Story />
       </Theme>
     ),

@@ -1,5 +1,6 @@
 import { Text as RadixText, type TextProps as RadixTextProps } from '@radix-ui/themes'
 import type { ReactNode } from 'react'
+import { textToneClasses, type TextTone } from '../../styles/colors'
 
 type TextSize = 'md' | 'sm'
 type TextWeight = 'normal' | 'bold'
@@ -7,6 +8,7 @@ type TextWeight = 'normal' | 'bold'
 export type TextProps = {
   size?: TextSize
   weight?: TextWeight
+  tone?: TextTone
   children?: ReactNode
   className?: string
   color?: RadixTextProps['color']
@@ -27,14 +29,31 @@ const radixWeight: Record<TextWeight, 'regular' | 'medium'> = {
   bold: 'medium',
 }
 
+function mergeClassNames(...classes: (string | undefined)[]) {
+  return classes.filter(Boolean).join(' ') || undefined
+}
+
 export function Text({
   size = 'md',
   weight = 'normal',
+  tone = 'primary',
+  as = 'p',
+  className,
+  color,
   children,
   ...props
 }: TextProps) {
+  const toneClassName = color ? undefined : textToneClasses[tone]
+
   return (
-    <RadixText size={radixSize[size]} weight={radixWeight[weight]} {...props}>
+    <RadixText
+      as={as}
+      size={radixSize[size]}
+      weight={radixWeight[weight]}
+      className={mergeClassNames(toneClassName, className)}
+      color={color}
+      {...props}
+    >
       {children}
     </RadixText>
   )
