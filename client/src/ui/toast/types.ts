@@ -1,4 +1,4 @@
-export type ToastType = 'success' | 'failure' | 'info'
+export type ToastType = 'success' | 'error' | 'info'
 
 export type OpenToastOptions = {
   message: string

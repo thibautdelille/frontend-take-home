@@ -36,11 +36,11 @@ function ToastDemo() {
           onClick={() =>
             toast.open({
               message: 'Failed to save changes. Please try again.',
-              type: 'failure',
+              type: 'error',
             })
           }
         >
-          Failure
+          Error
         </Button>
         <Button
           variant="secondary"

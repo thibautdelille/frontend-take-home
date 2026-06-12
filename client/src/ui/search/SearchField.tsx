@@ -17,7 +17,6 @@ export function SearchField({
 }: SearchFieldProps) {
   return (
     <TextField.Root
-      size="2"
       variant="surface"
       className={className}
       placeholder={placeholder}

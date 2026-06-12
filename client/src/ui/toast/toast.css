@@ -39,11 +39,11 @@
   background: var(--semantic-bg-subtle);
 }
 
-.toast-root--failure {
+.toast-root--error {
   border-color: var(--semantic-text-danger);
 }
 
-.toast-root--failure .toast-description {
+.toast-root--error .toast-description {
   color: var(--semantic-text-danger);
 }
 
