@@ -2,7 +2,7 @@ import { useMemo, useState } from 'react'
 import { useRoles } from './hooks/useRoles'
 import { useDebouncedValue } from './hooks/useDebouncedValue'
 import { useUsers } from './hooks/useUsers'
-import { toUserTableModel } from './tables'
+import { createEmptyUserTableModel, toUserTableModel } from './tables'
 import { Container, SearchField, spacing, Table, Text } from './ui'
 
 function App() {
@@ -21,35 +21,29 @@ function App() {
     return (roleId: string) => roleNames.get(roleId) ?? roleId
   }, [rolesQuery.data?.data])
 
+  const rolesReady = Boolean(rolesQuery.data)
+
   const userTableModel = useMemo(() => {
-    if (!usersQuery.data) return null
+    if (!usersQuery.data || !rolesReady) return createEmptyUserTableModel()
     return toUserTableModel(usersQuery.data.data, getRoleName)
-  }, [usersQuery.data, getRoleName])
+  }, [usersQuery.data, rolesReady, getRoleName])
 
-  if (rolesQuery.isPending || (usersQuery.isPending && !usersQuery.data)) {
-    return (
-      <main className="flex min-h-screen items-center justify-center p-8">
-        <Text size="md" weight="normal">Loading...</Text>
-      </main>
-    )
-  }
-
-  if (rolesQuery.isError || usersQuery.isError) {
-    return (
-      <main className="flex min-h-screen items-center justify-center p-8">
-        <Text size="md" weight="normal" color="red">
-          Failed to load data. Is the API running?
-        </Text>
-      </main>
-    )
-  }
+  const tableIsLoading = usersQuery.isFetching || !rolesReady
 
   return (
     <main className="flex min-h-screen justify-center px-2">
       <Container gap={spacing[5]}>
         <SearchField value={search} onChange={setSearch} />
-        {userTableModel && (
-          <Table.DataTable variant="surface" model={userTableModel} />
+        {usersQuery.isError ? (
+          <Text size="md" weight="normal" color="red">
+            Failed to load users. Is the API running?
+          </Text>
+        ) : (
+          <Table.DataTable
+            variant="surface"
+            model={userTableModel}
+            isLoading={tableIsLoading}
+          />
         )}
       </Container>
     </main>

@@ -1,6 +1,15 @@
 import type { User } from '../api/types'
 import { buildTableModel } from '../ui/table/buildTableModel'
-import type { TableColumn } from '../ui/table/types'
+import type { TableColumn, TableModel } from '../ui/table/types'
+
+const userTableHeaders = ['User', 'Role', 'Joined'] as const
+
+export function createEmptyUserTableModel(): TableModel {
+  return {
+    columns: userTableHeaders.map((header) => ({ header })),
+    rows: [],
+  }
+}
 
 export function userTableColumns(
   getRoleName: (roleId: string) => string,

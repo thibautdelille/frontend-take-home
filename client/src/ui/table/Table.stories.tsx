@@ -88,6 +88,26 @@ export const DataTableUsers: Story = {
   ),
 }
 
+export const DataTableLoading: Story = {
+  render: () => (
+    <Table.DataTable
+      variant="surface"
+      model={{ columns: [{ header: 'User' }, { header: 'Role' }, { header: 'Joined' }], rows: [] }}
+      isLoading
+    />
+  ),
+}
+
+export const DataTableSearching: Story = {
+  render: () => (
+    <Table.DataTable
+      variant="surface"
+      model={toUserTableModel(mockUsers, (roleId) => roleNames[roleId] ?? roleId)}
+      isLoading
+    />
+  ),
+}
+
 export const DataTableRoles: Story = {
   render: () => (
     <Table.DataTable variant="surface" model={toRoleTableModel(mockRoles)} />
