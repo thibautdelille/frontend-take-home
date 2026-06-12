@@ -1,4 +1,4 @@
-import { Text } from '@radix-ui/themes'
+import { Text } from './components/typography'
 import { useRoles } from './hooks/useRoles'
 import { useUsers } from './hooks/useUsers'
 
@@ -9,7 +9,7 @@ function App() {
   if (usersQuery.isPending || rolesQuery.isPending) {
     return (
       <main className="flex min-h-screen items-center justify-center p-8">
-        <Text>Loading...</Text>
+        <Text size="md" weight="normal">Loading...</Text>
       </main>
     )
   }
@@ -17,15 +17,17 @@ function App() {
   if (usersQuery.isError || rolesQuery.isError) {
     return (
       <main className="flex min-h-screen items-center justify-center p-8">
-        <Text color="red">Failed to load data. Is the API running?</Text>
+        <Text size="md" weight="normal" color="red">
+          Failed to load data. Is the API running?
+        </Text>
       </main>
     )
   }
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-center gap-2 p-8">
-      <Text>{usersQuery.data.data.length} users have been loaded</Text>
-      <Text>{rolesQuery.data.data.length} roles have been loaded</Text>
+      <Text size="md" weight="normal">{usersQuery.data.data.length} users have been loaded</Text>
+      <Text size="md" weight="normal">{rolesQuery.data.data.length} roles have been loaded</Text>
     </main>
   )
 }
