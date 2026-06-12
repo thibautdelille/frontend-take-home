@@ -1,8 +1,13 @@
 import { Box, Flex, Spinner, Table as RadixTable } from '@radix-ui/themes'
 import { Text } from '../typography'
 import { TableCellContent } from './cells'
+import { RowActionsMenu } from './RowActionsMenu'
 import { ColumnHeaderCell, type TableRootProps } from './Table'
 import type { TableModel } from './types'
+
+function hasRowActions(model: TableModel) {
+  return model.rows.some((row) => row.actions && row.actions.length > 0)
+}
 
 export type DataTableProps = {
   model: TableModel
@@ -37,6 +42,8 @@ function TableEmptyRow({ columnCount }: { columnCount: number }) {
 
 export function DataTable({ model, isLoading = false, ...rootProps }: DataTableProps) {
   const hasRows = model.rows.length > 0
+  const showActionsColumn = hasRowActions(model)
+  const columnCount = model.columns.length + (showActionsColumn ? 1 : 0)
   const showInitialLoading = isLoading && !hasRows
   const showOverlay = isLoading && hasRows
 
@@ -48,6 +55,9 @@ export function DataTable({ model, isLoading = false, ...rootProps }: DataTableP
             {model.columns.map((column) => (
               <ColumnHeaderCell key={column.header}>{column.header}</ColumnHeaderCell>
             ))}
+            {showActionsColumn && (
+              <ColumnHeaderCell aria-label="Actions" />
+            )}
           </RadixTable.Row>
         </RadixTable.Header>
         <RadixTable.Body>
@@ -59,13 +69,20 @@ export function DataTable({ model, isLoading = false, ...rootProps }: DataTableP
                     <TableCellContent cell={cell} />
                   </RadixTable.Cell>
                 ))}
+                {showActionsColumn && (
+                  <RadixTable.Cell>
+                    {row.actions && row.actions.length > 0 ? (
+                      <RowActionsMenu actions={row.actions} />
+                    ) : null}
+                  </RadixTable.Cell>
+                )}
               </RadixTable.Row>
             ))}
           {showInitialLoading && (
-            <TableLoadingRow columnCount={model.columns.length} />
+            <TableLoadingRow columnCount={columnCount} />
           )}
           {!isLoading && !hasRows && (
-            <TableEmptyRow columnCount={model.columns.length} />
+            <TableEmptyRow columnCount={columnCount} />
           )}
         </RadixTable.Body>
       </RadixTable.Root>

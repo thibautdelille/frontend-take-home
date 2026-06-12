@@ -2,11 +2,9 @@ export { Text, type TextProps } from './typography'
 export { Icon, icons, type IconName, type IconProps } from './icons'
 export {
   Button,
-  IconButton,
   type ButtonProps,
   type ButtonSize,
   type ButtonVariant,
-  type IconButtonProps,
 } from './button'
 export {
   borderClasses,
@@ -35,6 +33,7 @@ export {
   type TableCellProps,
   type TableRowHeaderCellProps,
   type TableRow,
+  type TableRowAction,
   type UserTableCell,
 } from './table'
 export { Container, type ContainerProps } from './container'

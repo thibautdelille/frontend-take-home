@@ -26,6 +26,7 @@ export type {
   TableColumnHeader,
   TableModel,
   TableRow,
+  TableRowAction,
   UserTableCell,
 } from './types'
 export type { DataTableProps } from './DataTable'

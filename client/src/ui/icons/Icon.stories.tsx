@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
-import { Button, IconButton } from '../button'
+import { Button } from '../button'
 import { Icon } from './Icon'
+import { IconButton } from '@radix-ui/themes'
 
 const meta = {
   title: 'Design System/Icons',
@@ -32,14 +33,16 @@ export const WithButton: Story = {
   ),
 }
 
-export const IconOnly: Story = {
-  render: () => <IconButton icon="dotsHorizontal" label="User actions" />,
-}
-
 export const WithAccessibleLabel: Story = {
   render: () => (
-    <button type="button" className="inline-flex rounded-full p-1 hover:bg-subtle">
+    <IconButton
+    variant="ghost"
+    color="gray"
+    radius="full"
+    size="1"
+    aria-label="Row actions"
+  >
       <Icon name="dotsHorizontal" label="User actions" />
-    </button>
+    </IconButton>
   ),
 }

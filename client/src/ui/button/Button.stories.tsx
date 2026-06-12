@@ -1,7 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
 import { AlertDialog, Flex, Text } from '@radix-ui/themes'
 import { Button } from './Button'
-import { IconButton } from './IconButton'
 
 const meta = {
   title: 'Design System/Button',
@@ -34,10 +33,6 @@ export const Pagination: Story = {
   ),
 }
 
-export const IconOnly: Story = {
-  render: () => <IconButton icon="dotsHorizontal" label="User actions" />,
-}
-
 export const AllVariants: Story = {
   render: () => (
     <Flex direction="column" gap="3" align="start">
@@ -51,7 +46,6 @@ export const AllVariants: Story = {
         Previous
       </Button>
       <Button variant="danger">Delete user</Button>
-      <IconButton icon="dotsHorizontal" label="User actions" />
     </Flex>
   ),
 }

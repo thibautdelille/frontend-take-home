@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
 import type { Role, User } from '../../api/types'
-import { toRoleTableModel, toUserTableModel } from '../../tables'
+import { userTableColumns, toRoleTableModel, toUserTableModel } from '../../tables'
+import { buildTableModel } from './buildTableModel'
 import { Table } from './index'
 
 const mockUsers: User[] = [
@@ -84,6 +85,20 @@ export const DataTableUsers: Story = {
     <Table.DataTable
       variant="surface"
       model={toUserTableModel(mockUsers, (roleId) => roleNames[roleId] ?? roleId)}
+    />
+  ),
+}
+
+export const DataTableUsersWithRowActions: Story = {
+  render: () => (
+    <Table.DataTable
+      variant="surface"
+      model={buildTableModel(
+        mockUsers,
+        userTableColumns((roleId) => roleNames[roleId] ?? roleId),
+        (user) => user.id,
+        () => [{ label: 'Delete user', onSelect: () => {} }],
+      )}
     />
   ),
 }

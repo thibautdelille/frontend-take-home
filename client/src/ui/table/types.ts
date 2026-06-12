@@ -21,9 +21,15 @@ export type DateTableCell = {
 
 export type TableCell = UserTableCell | StringTableCell | LabelTableCell | DateTableCell
 
+export type TableRowAction = {
+  label: string
+  onSelect: () => void
+}
+
 export type TableRow = {
   id: string
   cells: TableCell[]
+  actions?: TableRowAction[]
 }
 
 export type TableColumnHeader = {
