@@ -1,4 +1,4 @@
-import { Text } from './ui'
+import { Table, Text } from './ui'
 import { useRoles } from './hooks/useRoles'
 import { useUsers } from './hooks/useUsers'
 
@@ -28,6 +28,35 @@ function App() {
     <main className="flex min-h-screen flex-col items-center justify-center gap-2 p-8">
       <Text size="md" weight="normal">{usersQuery.data.data.length} users have been loaded</Text>
       <Text size="md" weight="normal">{rolesQuery.data.data.length} roles have been loaded</Text>
+      <Table.Root variant="surface">
+        <Table.Header>
+          <Table.Row>
+            <Table.ColumnHeaderCell>Full name</Table.ColumnHeaderCell>
+            <Table.ColumnHeaderCell>Email</Table.ColumnHeaderCell>
+            <Table.ColumnHeaderCell>Group</Table.ColumnHeaderCell>
+          </Table.Row>
+        </Table.Header>
+
+        <Table.Body>
+          <Table.Row>
+            <Table.RowHeaderCell>Danilo Sousa</Table.RowHeaderCell>
+            <Table.Cell>danilo@example.com</Table.Cell>
+            <Table.Cell>Developer</Table.Cell>
+          </Table.Row>
+
+          <Table.Row>
+            <Table.RowHeaderCell>Zahra Ambessa</Table.RowHeaderCell>
+            <Table.Cell>zahra@example.com</Table.Cell>
+            <Table.Cell>Admin</Table.Cell>
+          </Table.Row>
+
+          <Table.Row>
+            <Table.RowHeaderCell>Jasper Eriksson</Table.RowHeaderCell>
+            <Table.Cell>jasper@example.com</Table.Cell>
+            <Table.Cell>Developer</Table.Cell>
+          </Table.Row>
+        </Table.Body>
+      </Table.Root>
     </main>
   )
 }

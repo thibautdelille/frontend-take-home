@@ -15,3 +15,13 @@ export {
   type TextTone,
 } from './colors/colors'
 export { textColorClasses, typographyClasses } from './typography/typography'
+export {
+  Table,
+  type ColumnHeaderCellProps,
+  type TableRootProps,
+  type TableHeaderProps,
+  type TableBodyProps,
+  type TableRowProps,
+  type TableCellProps,
+  type TableRowHeaderCellProps,
+} from './table'
