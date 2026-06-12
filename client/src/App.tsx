@@ -1,10 +1,24 @@
-import { Container, Table, Text } from './ui'
+import { useMemo } from 'react'
 import { useRoles } from './hooks/useRoles'
 import { useUsers } from './hooks/useUsers'
+import { toUserTableModel } from './tables'
+import { Container, Table, Text } from './ui'
 
 function App() {
   const usersQuery = useUsers()
   const rolesQuery = useRoles()
+
+  const getRoleName = useMemo(() => {
+    const roleNames = new Map(
+      rolesQuery.data?.data.map((role) => [role.id, role.name]) ?? [],
+    )
+    return (roleId: string) => roleNames.get(roleId) ?? roleId
+  }, [rolesQuery.data?.data])
+
+  const userTableModel = useMemo(() => {
+    if (!usersQuery.data) return null
+    return toUserTableModel(usersQuery.data.data, getRoleName)
+  }, [usersQuery.data, getRoleName])
 
   if (usersQuery.isPending || rolesQuery.isPending) {
     return (
@@ -26,38 +40,10 @@ function App() {
 
   return (
     <main className="flex min-h-screen justify-center px-2">
-      <Container className="gap-2">
-        <Text size="md" weight="normal">{usersQuery.data.data.length} users have been loaded</Text>
-        <Text size="md" weight="normal">{rolesQuery.data.data.length} roles have been loaded</Text>
-        <Table.Root variant="surface">
-        <Table.Header>
-          <Table.Row>
-            <Table.ColumnHeaderCell>Full name</Table.ColumnHeaderCell>
-            <Table.ColumnHeaderCell>Email</Table.ColumnHeaderCell>
-            <Table.ColumnHeaderCell>Group</Table.ColumnHeaderCell>
-          </Table.Row>
-        </Table.Header>
-
-        <Table.Body>
-          <Table.Row>
-            <Table.RowHeaderCell>Danilo Sousa</Table.RowHeaderCell>
-            <Table.Cell>danilo@example.com</Table.Cell>
-            <Table.Cell>Developer</Table.Cell>
-          </Table.Row>
-
-          <Table.Row>
-            <Table.RowHeaderCell>Zahra Ambessa</Table.RowHeaderCell>
-            <Table.Cell>zahra@example.com</Table.Cell>
-            <Table.Cell>Admin</Table.Cell>
-          </Table.Row>
-
-          <Table.Row>
-            <Table.RowHeaderCell>Jasper Eriksson</Table.RowHeaderCell>
-            <Table.Cell>jasper@example.com</Table.Cell>
-            <Table.Cell>Developer</Table.Cell>
-          </Table.Row>
-        </Table.Body>
-      </Table.Root>
+      <Container>
+        {userTableModel && (
+          <Table.DataTable variant="surface" model={userTableModel} />
+        )}
       </Container>
     </main>
   )
