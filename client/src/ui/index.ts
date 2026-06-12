@@ -17,13 +17,25 @@ export {
 export { textColorClasses, typographyClasses } from './typography/typography'
 export {
   Table,
+  buildTableModel,
+  formatTableDate,
   type ColumnHeaderCellProps,
+  type DataTableProps,
+  type DateTableCell,
+  type LabelTableCell,
+  type StringTableCell,
+  type TableCell,
+  type TableColumn,
+  type TableColumnHeader,
+  type TableModel,
   type TableRootProps,
   type TableHeaderProps,
   type TableBodyProps,
   type TableRowProps,
   type TableCellProps,
   type TableRowHeaderCellProps,
+  type TableRow,
+  type UserTableCell,
 } from './table'
 export { Container, type ContainerProps } from './container'
 export { containerWidth, spacing, type Spacing } from './layout/spacing'

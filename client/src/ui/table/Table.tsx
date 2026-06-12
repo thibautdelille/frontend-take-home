@@ -17,7 +17,7 @@ export type ColumnHeaderCellProps = ComponentPropsWithoutRef<
   children?: ReactNode
 }
 
-function ColumnHeaderCell({ children, ...props }: ColumnHeaderCellProps) {
+export function ColumnHeaderCell({ children, ...props }: ColumnHeaderCellProps) {
   return (
     <RadixTable.ColumnHeaderCell {...props}>
       <Text as="span" size="md" weight="bold">
