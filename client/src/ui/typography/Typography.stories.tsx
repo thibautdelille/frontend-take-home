@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
 import { Text } from './Text'
-import { textToneClasses, typographyClasses } from '../../styles/typography'
+import { textToneClasses, typographyClasses } from './typography'
 
 const meta = {
   title: 'Design System/Typography',

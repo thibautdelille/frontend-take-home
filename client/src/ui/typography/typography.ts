@@ -1,4 +1,4 @@
-export { textToneClasses, type TextTone } from './colors'
+export { textToneClasses, type TextTone } from '../colors/colors'
 
 /**
  * Tailwind class names matching Figma text styles.
@@ -11,4 +11,4 @@ export const typographyClasses = {
   smNormal: 'text-1-normal',
 } as const
 
-export { textToneClasses as textColorClasses } from './colors'
+export { textToneClasses as textColorClasses } from '../colors/colors'

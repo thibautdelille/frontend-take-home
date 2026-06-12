@@ -1,6 +1,6 @@
 import { Text as RadixText, type TextProps as RadixTextProps } from '@radix-ui/themes'
 import type { ReactNode } from 'react'
-import { textToneClasses, type TextTone } from '../../styles/colors'
+import { textToneClasses, type TextTone } from '../colors/colors'
 
 type TextSize = 'md' | 'sm'
 type TextWeight = 'normal' | 'bold'

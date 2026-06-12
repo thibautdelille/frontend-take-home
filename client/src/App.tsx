@@ -1,4 +1,4 @@
-import { Text } from './components/typography'
+import { Text } from './ui'
 import { useRoles } from './hooks/useRoles'
 import { useUsers } from './hooks/useUsers'
 
