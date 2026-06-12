@@ -1,17 +1,10 @@
-import { useQuery } from '@tanstack/react-query'
 import { Text } from '@radix-ui/themes'
-import { fetchRoles, fetchUsers } from './api'
+import { useRoles } from './hooks/useRoles'
+import { useUsers } from './hooks/useUsers'
 
 function App() {
-  const usersQuery = useQuery({
-    queryKey: ['users'],
-    queryFn: fetchUsers,
-  })
-
-  const rolesQuery = useQuery({
-    queryKey: ['roles'],
-    queryFn: fetchRoles,
-  })
+  const usersQuery = useUsers()
+  const rolesQuery = useRoles()
 
   if (usersQuery.isPending || rolesQuery.isPending) {
     return (

@@ -23,3 +23,9 @@ export interface PagedData<T> {
   prev: number | null
   pages: number
 }
+
+export type CreateUserInput = Pick<User, 'first' | 'last' | 'roleId'>
+export type UpdateUserInput = Partial<CreateUserInput>
+
+export type CreateRoleInput = Pick<Role, 'name'> & Partial<Pick<Role, 'description' | 'isDefault'>>
+export type UpdateRoleInput = Partial<Pick<Role, 'name' | 'description' | 'isDefault'>>
