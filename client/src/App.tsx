@@ -1,4 +1,4 @@
-import { Table, Text } from './ui'
+import { Container, Table, Text } from './ui'
 import { useRoles } from './hooks/useRoles'
 import { useUsers } from './hooks/useUsers'
 
@@ -25,10 +25,11 @@ function App() {
   }
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center gap-2 p-8">
-      <Text size="md" weight="normal">{usersQuery.data.data.length} users have been loaded</Text>
-      <Text size="md" weight="normal">{rolesQuery.data.data.length} roles have been loaded</Text>
-      <Table.Root variant="surface">
+    <main className="flex min-h-screen justify-center px-2">
+      <Container className="gap-2">
+        <Text size="md" weight="normal">{usersQuery.data.data.length} users have been loaded</Text>
+        <Text size="md" weight="normal">{rolesQuery.data.data.length} roles have been loaded</Text>
+        <Table.Root variant="surface">
         <Table.Header>
           <Table.Row>
             <Table.ColumnHeaderCell>Full name</Table.ColumnHeaderCell>
@@ -57,6 +58,7 @@ function App() {
           </Table.Row>
         </Table.Body>
       </Table.Root>
+      </Container>
     </main>
   )
 }

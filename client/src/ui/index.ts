@@ -25,3 +25,5 @@ export {
   type TableCellProps,
   type TableRowHeaderCellProps,
 } from './table'
+export { Container, type ContainerProps } from './container'
+export { containerWidth, spacing, type Spacing } from './layout/spacing'
