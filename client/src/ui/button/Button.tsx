@@ -2,7 +2,7 @@ import {
   Button as RadixButton,
   type ButtonProps as RadixButtonProps,
 } from '@radix-ui/themes'
-import type { ReactNode } from 'react'
+import { forwardRef, type ReactNode } from 'react'
 import { Icon, type IconName } from '../icons'
 import { Text } from '../typography'
 import type { TextTone } from '../colors/colors'
@@ -49,32 +49,38 @@ const radixSize: Record<ButtonSize, NonNullable<RadixButtonProps['size']>> = {
   sm: '1',
 }
 
-export function Button({
-  variant = 'primary',
-  size = 'md',
-  icon,
-  children,
-  className,
-  disabled,
-  loading,
-  type = 'button',
-  onClick,
-  asChild,
-}: ButtonProps) {
+export const Button = forwardRef<HTMLButtonElement, ButtonProps>(function Button(
+  {
+    variant = 'primary',
+    size = 'md',
+    icon,
+    children,
+    className,
+    disabled,
+    loading,
+    type = 'button',
+    onClick,
+    asChild,
+  },
+  ref,
+) {
   return (
     <RadixButton
+      ref={ref}
       variant={radixVariant[variant]}
       color={radixColor[variant]}
       size={radixSize[size]}
       className={className}
       disabled={disabled}
       loading={loading}
-      type={type}
+      type={type as 'button' | 'submit' | 'reset'}
       onClick={onClick}
       asChild={asChild}
     >
       {icon && <Icon name={icon} />}
-      <Text as="span" size="md" weight="bold" tone={radixTextColor[variant]}>{children}</Text>
+      <Text as="span" size="md" weight="bold" tone={radixTextColor[variant]}>
+        {children}
+      </Text>
     </RadixButton>
   )
-}
+})

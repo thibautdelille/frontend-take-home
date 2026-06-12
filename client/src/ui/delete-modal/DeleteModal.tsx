@@ -1,4 +1,5 @@
 import { AlertDialog, Flex } from '@radix-ui/themes'
+import { useRef } from 'react'
 import { Button } from '../button'
 import { spacing } from '../layout/spacing'
 import { Text } from '../typography'
@@ -22,9 +23,17 @@ export function DeleteModal({
   onConfirm,
   isConfirming = false,
 }: DeleteModalProps) {
+  const cancelRef = useRef<HTMLButtonElement>(null)
+
   return (
     <AlertDialog.Root open={open} onOpenChange={onOpenChange}>
-      <AlertDialog.Content maxWidth="400px">
+      <AlertDialog.Content
+        maxWidth="400px"
+        onOpenAutoFocus={(event) => {
+          event.preventDefault()
+          cancelRef.current?.focus()
+        }}
+      >
         <AlertDialog.Title>Delete {title}</AlertDialog.Title>
         <AlertDialog.Description>
           <Text as="p" size="md" weight="normal" tone="secondary">
@@ -33,7 +42,7 @@ export function DeleteModal({
         </AlertDialog.Description>
         <Flex gap={spacing[3]} justify="end" mt={spacing[4]}>
           <AlertDialog.Cancel>
-            <Button variant="secondary" disabled={isConfirming}>
+            <Button ref={cancelRef} variant="secondary" disabled={isConfirming}>
               Cancel
             </Button>
           </AlertDialog.Cancel>
