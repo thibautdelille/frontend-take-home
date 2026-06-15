@@ -1,6 +1,7 @@
+import { Table as RadixTable } from '@radix-ui/themes'
 import { DataTable } from './DataTable'
 import {
-  Table as TableBase,
+  ColumnHeaderCell,
   type ColumnHeaderCellProps,
   type TableBodyProps,
   type TableCellProps,
@@ -11,7 +12,13 @@ import {
 } from './Table'
 
 export const Table = {
-  ...TableBase,
+  Root: RadixTable.Root,
+  Header: RadixTable.Header,
+  Body: RadixTable.Body,
+  Row: RadixTable.Row,
+  Cell: RadixTable.Cell,
+  RowHeaderCell: RadixTable.RowHeaderCell,
+  ColumnHeaderCell,
   DataTable,
 }
 

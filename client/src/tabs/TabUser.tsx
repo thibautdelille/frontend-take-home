@@ -67,15 +67,15 @@ export function TabUser() {
     )
   }, [usersQuery.data, rolesQuery.data, getRoleName, handleEditUser, handleDeleteUser])
 
-  useEffect(() => {
+  const [prevSearch, setPrevSearch] = useState(debouncedSearch)
+  if (debouncedSearch !== prevSearch) {
+    setPrevSearch(debouncedSearch)
     setPage(1)
-  }, [debouncedSearch])
+  }
 
-  useEffect(() => {
-    if (usersQuery.data && usersQuery.data.data.length === 0 && page > 1) {
-      setPage(page - 1)
-    }
-  }, [usersQuery.data, page])
+  if (usersQuery.data && usersQuery.data.data.length === 0 && page > 1) {
+    setPage(page - 1)
+  }
 
   useEffect(() => {
     if (usersQuery.isError) {

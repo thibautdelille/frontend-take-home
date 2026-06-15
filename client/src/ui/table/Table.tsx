@@ -26,13 +26,3 @@ export function ColumnHeaderCell({ children, ...props }: ColumnHeaderCellProps) 
     </RadixTable.ColumnHeaderCell>
   )
 }
-
-export const Table = {
-  Root: RadixTable.Root,
-  Header: RadixTable.Header,
-  Body: RadixTable.Body,
-  Row: RadixTable.Row,
-  Cell: RadixTable.Cell,
-  RowHeaderCell: RadixTable.RowHeaderCell,
-  ColumnHeaderCell,
-}
