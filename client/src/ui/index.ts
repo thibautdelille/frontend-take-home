@@ -39,6 +39,7 @@ export {
 export { Container, type ContainerProps } from './container'
 export { DeleteModal, type DeleteModalProps } from './delete-modal'
 export { SearchField, type SearchFieldProps } from './search'
+export { Pagination, type PaginationProps } from './pagination'
 export {
   UserFormModal,
   type UserFormModalProps,

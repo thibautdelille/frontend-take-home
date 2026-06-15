@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
 import { AlertDialog, Flex, Text } from '@radix-ui/themes'
+import { Pagination as PaginationControls } from '../pagination'
 import { Button } from './Button'
 
 const meta = {
@@ -20,16 +21,14 @@ export const Primary: Story = {
   ),
 }
 
-export const Pagination: Story = {
+export const PaginationButtons: Story = {
   render: () => (
-    <Flex gap="2">
-      <Button variant="subtle" size="sm" disabled>
-        Previous
-      </Button>
-      <Button variant="secondary" size="sm">
-        Next
-      </Button>
-    </Flex>
+    <PaginationControls
+      hasPrevious={false}
+      hasNext
+      onPrevious={() => {}}
+      onNext={() => {}}
+    />
   ),
 }
 

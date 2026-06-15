@@ -78,7 +78,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(function Button
       asChild={asChild}
     >
       {icon && <Icon name={icon} />}
-      <Text as="span" size="md" weight="bold" tone={radixTextColor[variant]}>
+      <Text as="span" size={size === 'sm' ? 'sm' : 'md'} weight="bold" tone={radixTextColor[variant]}>
         {children}
       </Text>
     </RadixButton>

@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useMemo, useState } from 'react'
+import type { ListParams } from '../api/query-keys'
 import type { CreateUserInput, User } from '../api/types'
 import { useRoles } from '../hooks/useRoles'
 import { useDebouncedValue } from '../hooks/useDebouncedValue'
@@ -14,14 +15,19 @@ import { Flex } from '@radix-ui/themes'
 
 export function TabUser() {
   const [search, setSearch] = useState('')
+  const [page, setPage] = useState(1)
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false)
   const [editingUser, setEditingUser] = useState<User | null>(null)
   const [deletingUser, setDeletingUser] = useState<User | null>(null)
   const debouncedSearch = useDebouncedValue(search.trim(), 300)
 
-  const usersQuery = useUsers(
-    debouncedSearch ? { search: debouncedSearch } : undefined,
-  )
+  const listParams = useMemo<ListParams>(() => {
+    const params: ListParams = { page }
+    if (debouncedSearch) params.search = debouncedSearch
+    return params
+  }, [page, debouncedSearch])
+
+  const usersQuery = useUsers(listParams)
   const rolesQuery = useRoles()
   const createUserMutation = useCreateUser()
   const updateUserMutation = useUpdateUser()
@@ -60,6 +66,16 @@ export function TabUser() {
       ],
     )
   }, [usersQuery.data, rolesQuery.data, getRoleName, handleEditUser, handleDeleteUser])
+
+  useEffect(() => {
+    setPage(1)
+  }, [debouncedSearch])
+
+  useEffect(() => {
+    if (usersQuery.data && usersQuery.data.data.length === 0 && page > 1) {
+      setPage(page - 1)
+    }
+  }, [usersQuery.data, page])
 
   useEffect(() => {
     if (usersQuery.isError) {
@@ -129,6 +145,21 @@ export function TabUser() {
         variant="surface"
         model={userTableModel}
         isLoading={usersQuery.isFetching || rolesQuery.isLoading}
+        pagination={
+          usersQuery.data && usersQuery.data.pages > 1
+            ? {
+                hasPrevious: usersQuery.data.prev !== null,
+                hasNext: usersQuery.data.next !== null,
+                isLoading: usersQuery.isFetching,
+                onPrevious: () => {
+                  if (usersQuery.data?.prev) setPage(usersQuery.data.prev)
+                },
+                onNext: () => {
+                  if (usersQuery.data?.next) setPage(usersQuery.data.next)
+                },
+              }
+            : undefined
+        }
       />
       <UserFormModal
         open={isCreateModalOpen}

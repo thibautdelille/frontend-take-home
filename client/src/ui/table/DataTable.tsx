@@ -1,4 +1,5 @@
 import { Box, Flex, Spinner, Table as RadixTable } from '@radix-ui/themes'
+import { Pagination, type PaginationProps } from '../pagination'
 import { Text } from '../typography'
 import { TableCellContent } from './cells'
 import { RowActionsMenu } from './RowActionsMenu'
@@ -12,6 +13,7 @@ function hasRowActions(model: TableModel) {
 export type DataTableProps = {
   model: TableModel
   isLoading?: boolean
+  pagination?: PaginationProps
 } & Omit<TableRootProps, 'children'>
 
 function TableLoadingRow({ columnCount }: { columnCount: number }) {
@@ -40,7 +42,12 @@ function TableEmptyRow({ columnCount }: { columnCount: number }) {
   )
 }
 
-export function DataTable({ model, isLoading = false, ...rootProps }: DataTableProps) {
+export function DataTable({
+  model,
+  isLoading = false,
+  pagination,
+  ...rootProps
+}: DataTableProps) {
   const hasRows = model.rows.length > 0
   const showActionsColumn = hasRowActions(model)
   const columnCount = model.columns.length + (showActionsColumn ? 1 : 0)
@@ -89,6 +96,13 @@ export function DataTable({ model, isLoading = false, ...rootProps }: DataTableP
           )}
           {!isLoading && !hasRows && (
             <TableEmptyRow columnCount={columnCount} />
+          )}
+          {pagination && (
+            <RadixTable.Row>
+              <RadixTable.Cell colSpan={columnCount}>
+                <Pagination {...pagination} />
+              </RadixTable.Cell>
+            </RadixTable.Row>
           )}
         </RadixTable.Body>
       </RadixTable.Root>
