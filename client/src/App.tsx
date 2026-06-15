@@ -6,8 +6,8 @@ function App() {
   return (
     <main className="flex min-h-screen justify-center px-2">
       <Container gap={spacing[5]}>
-        <Tabs.Root defaultValue="users" orientation="vertical">
-          <Tabs.List aria-label="tabs example">
+        <Tabs.Root defaultValue="users" orientation="horizontal">
+          <Tabs.List aria-label="Users and Roles">
             <Tabs.Trigger value="users">Users</Tabs.Trigger>
             <Tabs.Trigger value="roles">Roles</Tabs.Trigger>
           </Tabs.List>
