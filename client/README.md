@@ -2,38 +2,32 @@
 
 React + Vite frontend for the WorkOS take-home assignment.
 
-## Stack
+See the [root README](../README.md) for full submission notes, approach, and future improvements.
 
-- [React](https://react.dev/) + [Vite](https://vite.dev/)
-- [Radix Themes](https://www.radix-ui.com/themes) for accessible UI primitives
-- [Tailwind CSS](https://tailwindcss.com/) for utility styling
-- [Storybook](https://storybook.js.org/) for component development
+## Quick start
 
-## Getting started
-
-From the repo root, start the backend API first:
+Start the backend first (from repo root):
 
 ```bash
-cd server
-npm install
-npm run api
+cd server && npm install && npm run api
 ```
 
-Then, in a separate terminal:
+Then:
 
 ```bash
-cd client
 npm install
 npm run dev
 ```
 
-The app runs at `http://localhost:5173`. API requests to `/users` and `/roles` are proxied to the backend on port `3002`.
+App: `http://localhost:5173` · Storybook: `npm run storybook` → `http://localhost:6006`
 
 ## Scripts
 
-- `npm run dev` — start the dev server
-- `npm run build` — type-check and build for production
-- `npm run preview` — preview the production build
-- `npm run lint` — run ESLint
-- `npm run storybook` — start Storybook at `http://localhost:6006`
-- `npm run build-storybook` — build Storybook for static hosting
+| Command | Description |
+|---|---|
+| `npm run dev` | Start the dev server |
+| `npm run build` | Type-check and build for production |
+| `npm run preview` | Preview the production build |
+| `npm run lint` | Run ESLint |
+| `npm run storybook` | Start Storybook |
+| `npm run build-storybook` | Build Storybook for static hosting |
