@@ -1,92 +1,131 @@
-# Frontend Take-Home Assignment
+# Frontend Take-Home — Submission
 
-Welcome to the WorkOS Frontend Take-Home Assignment!
+React frontend for the WorkOS take-home assignment: a two-tab interface to list, search, update, and delete users and roles.
 
-In this exercise, you'll implement the UI for a simple two-tab layout that lists users and roles. You will also add limited functionality to update users and roles.
+## How to run
 
-You should have received an invitation to view a Figma design file for the take-home assignment. If you haven't received and invitation email, please reach out to us.
+### 1. Start the backend API
 
-To get you started, we've also provided a fully functional backend API. Keep in mind, you won’t need to implement all of the functionality implied by the design or backend API. Make sure to focus on the specific tasks outlined below.
+From the repo root:
 
-Feel free to use any frontend framework and libraries you prefer — there’s no need to build everything from scratch. At WorkOS, we use [Radix Themes](https://www.radix-ui.com/), and it's perfectly fine if you want to leverage similar libraries. Just be ready to explain your decisions, including why you chose certain libraries and how they benefit the project.
+```bash
+cd server
+npm install
+npm run api
+```
 
-If you have any questions, feel free to reach out — we're happy to clarify anything.
+The API runs on `http://localhost:3002`. It includes intentional latency and random errors to simulate real-world conditions. You can adjust speed with the `SERVER_SPEED` environment variable (`slow` | `instant`).
 
-## Time Consideration
+### 2. Start the client
 
-We value your time! If this assignment takes you more than 8 hours, please submit whatever you have at that point.
+In a separate terminal:
 
-Focus on quality. You should be proud of your submission. While the code doesn't need to be 100% production-ready, it should be polished enough for a demo.
+```bash
+cd client
+npm install
+npm run dev
+```
 
-Be sure to include a README that outlines what you'd improve or do differently if you had more time.
+The app runs at `http://localhost:5173`. API requests to `/users` and `/roles` are proxied to the backend.
 
-## Getting Started
+### 3. (Optional) Start Storybook
 
-1. **Fork the Repo**: Start by forking this repository so that you have your own version to work with.
-2. **Start the Backend API**:
-   - Ensure you have the latest version of Node.js.
-   - Run the following commands to install dependencies and start the API:
-     ```bash
-     cd server
-     npm install
-     npm run api
-     ```
-3. **Project Setup**: Add your project under the `client` directory.
+```bash
+cd client
+npm run storybook
+```
 
-## Design Reference
+Storybook runs at `http://localhost:6006` and documents the design system and UI components in isolation.
 
-Be sure to consult the Figma design file that you were invited to view. You'll need to sign-in to Figma to access the design, so you may need to create a Figma account.
+## Approach
 
-The design is a starting point — you'll need to fill in some details (e.g., loading states, error states, hover states). The "Roles" tab is not designed, so you'll infer the design based on what is provided for the "Users" tab.
+### Data fetching with React Query
 
-For those portions of the exercise in which the design is given, your implementation should match the design as closely as possible. Attention to detail is important. It is certainly acceptable to deviate from the design if you are confident it is an improvement, but please explain your thinking in your README.
+I started by adding [TanStack React Query](https://tanstack.com/query/latest) to wrap API calls. This gives graceful loading and error handling out of the box, keeps server state in sync after mutations, and avoids hand-rolling fetch/cache logic.
 
-## Backend API
+Custom hooks (`useUsers`, `useRoles`) encapsulate queries and mutations, with shared query keys in `api/query-keys.ts`.
 
-The API provides full CRUD support for users and roles, but you won’t need to use every endpoint.
+### Design system & Storybook
 
-**Do not alter the backend API**.
+I installed [Storybook](https://storybook.js.org/) and built a small design system as the foundation for the UI:
 
-The API includes intentional latency and random server errors to simulate real-world scenarios. Ensure your front-end handles these gracefully.
+- **Typography** — text styles and hierarchy
+- **Colors** — CSS custom properties for the palette
+- **Button** — primary actions
+- **Container** — layout wrapper with consistent spacing
 
-You can adjust the API speed using the `SERVER_SPEED` environment variable:
+Each primitive has a Storybook story so components can be developed and reviewed in isolation before being composed into screens.
 
-- **slow**: Simulate slower network (`SERVER_SPEED=slow npm run api`)
-- **instant**: Remove latency (`SERVER_SPEED=instant npm run api`)
+### Generic table component
 
-You can run backend tests by executing `npm run test` in the `server` directory. The test code is located at `server/src/api.test.ts`.
+The main table work focused on a reusable `DataTable` that renders both Users and Roles by transforming domain data into a generic column/row format (`buildTableModel`, column definitions in `tables/`).
 
-## Tasks Overview
+The table supports:
 
-Work on the following tasks in this order. If you can’t complete all tasks, focus on quality rather than quantity.
+- **Typed cell renderers** — strings, dates, labels, user avatars
+- **Row actions** — a dropdown menu to update or delete rows
+- **Loading & error states** — driven by React Query status
 
-1. Setup the "Users" and "Roles" tab structure
-2. Add the users table
-3. Add support for filtering the users table via the "Search" input field
-4. Add support for deleting a user via the "more" icon button dropdown menu
-5. Add support for viewing all roles in the "Roles" tab
-6. Add support for renaming a role in the "Roles" tab
-7. [Bonus] Add pagination to the user table
+This keeps `TabUser` and `TabRole` thin: they wire data, handlers, and tab-specific UI (search, pagination) around the shared table.
 
-## Evaluation Criteria
+### Toast notifications
 
-We’ll evaluate based on the following:
+A `useToast` hook (via `ToastProvider`) handles success and error messaging for mutations — delete, rename, update — so feedback is consistent across both tabs.
 
-- **User Experience (UX)**: Clean and intuitive interface.
-- **Component Composition**: Modular and reusable components.
-- **State Management & Caching**: Efficient handling of data.
-- **Error & Loading States**: Graceful handling of API delays and errors.
-- **CSS Animations**: Best practices followed for smooth UI interactions.
-- **Code Quality**: Clean, well-structured, and maintainable code.
-- **Accessibility**: Keyboard navigation and accessibility considerations.
+### Tab implementation
 
-## Submission Guidelines
+Once the shared components were in place, I implemented the content for both tabs:
 
-**Please do not submit a pull request to the WorkOS repo.**
+- **Users** — search/filter, pagination, update name, delete
+- **Roles** — list all roles, rename
 
-In your forked repository, include a README that explains:
+Both are hooked up to the API through the React Query hooks in `TabUser` and `TabRole`.
 
-- How to run your project.
-- What you would improve or do differently if you had more time.
+Pagination is implemented on the Users tab. Adding it to Roles would follow the same pattern since the table and `Pagination` component are already generic.
 
-Once you're ready, share the URL to your GitHub repository with us. Make sure your code runs locally based on the instructions in your README.
+## Stack
+
+- [React](https://react.dev/) + [Vite](https://vite.dev/)
+- [TanStack React Query](https://tanstack.com/query/latest) — server state
+- [Radix Themes](https://www.radix-ui.com/themes) — accessible UI primitives (tabs, dialogs)
+- [Tailwind CSS](https://tailwindcss.com/) — utility styling
+- [Storybook](https://storybook.js.org/) — component development & documentation
+
+## If I had more time
+
+- **Routing** — add [TanStack Router](https://tanstack.com/router/latest) to persist the active tab and search params (page, search) in the URL
+- **Testing** — unit tests, interaction tests (Storybook/Vitest), and end-to-end tests (Playwright)
+- **Lint rules** — stricter ESLint rules to enforce consistent usage of Radix, React Query, Storybook patterns, etc.
+- **Agent docs** — contribution guidelines aimed at AI agents (conventions, folder structure, how to extend the table)
+- **CI** — GitHub Actions to run tests, lint, Prettier, and `tsc` on every PR
+- **Table features** — filtering and sorting beyond the current search
+- **Theming & i18n** — dark mode and internationalization support
+
+## Original assignment
+
+The sections below are from the original take-home brief for reference.
+
+### Design reference
+
+Consult the Figma design file provided with the assignment. The Roles tab was not fully designed — its layout is inferred from the Users tab.
+
+### Backend API
+
+The API provides full CRUD for users and roles. **Do not alter the backend.**
+
+Run backend tests:
+
+```bash
+cd server
+npm run test
+```
+
+### Tasks completed
+
+1. Users and Roles tab structure
+2. Users table
+3. Search/filter on users
+4. Delete user via row actions
+5. Roles list in Roles tab
+6. Rename role in Roles tab
+7. [Bonus] Pagination on users table

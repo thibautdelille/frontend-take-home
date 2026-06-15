@@ -1,0 +1,46 @@
+@theme {
+  --color-primary: var(--semantic-text-primary);
+  --color-secondary: var(--semantic-text-secondary);
+  --color-placeholder: var(--semantic-text-placeholder);
+  --color-disabled: var(--semantic-text-disabled);
+  --color-danger: var(--semantic-text-danger);
+  --color-inverse: var(--semantic-text-inverse);
+  --color-surface: var(--semantic-bg-surface);
+  --color-subtle: var(--semantic-bg-subtle);
+  --color-default: var(--semantic-border-default);
+  --color-input: var(--semantic-border-input);
+  --color-accent: var(--semantic-accent);
+}
+
+.radix-themes {
+  /* Figma purple accent */
+  --accent-9: #6565ec;
+  --accent-10: #5a5ad4;
+  --accent-indicator: #6565ec;
+  --accent-a3: rgba(0, 17, 238, 0.06);
+
+  /* Figma gray scale */
+  --gray-2: #f9f9fb;
+  --gray-6: #dddde3;
+  --gray-12: #2b333b;
+  --gray-a5: rgba(0, 0, 48, 0.11);
+  --gray-a8: rgba(0, 8, 47, 0.28);
+  --gray-a9: rgba(0, 4, 29, 0.46);
+  --gray-a11: rgba(0, 7, 19, 0.62);
+
+  --red-11: #C10030DB;
+
+  /* Semantic aliases */
+  --semantic-text-primary: var(--gray-12);
+  --semantic-text-secondary: var(--gray-a11);
+  --semantic-text-placeholder: var(--gray-a9);
+  --semantic-text-disabled: var(--gray-a8);
+  --semantic-text-danger: var(--red-11);
+  --semantic-text-inverse: #ffffff;
+  --semantic-bg-surface: #ffffff;
+  --semantic-bg-subtle: var(--gray-2);
+  --semantic-border-default: var(--gray-6);
+  --semantic-border-input: var(--gray-a5);
+  --semantic-accent: var(--accent-9);
+  --semantic-tab-divider: rgba(1, 1, 46, 0.13);
+}

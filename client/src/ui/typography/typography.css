@@ -1,0 +1,52 @@
+@theme {
+  --font-sans: 'Inter', ui-sans-serif, system-ui, sans-serif;
+}
+
+:root {
+  --font-family-sans: var(--font-sans);
+
+  /* Figma: Text/2/Bold & Text/2/Normal */
+  --text-2-size: 14px;
+  --text-2-line-height: 20px;
+
+  /* Figma: Text/1/Bold */
+  --text-1-size: 12px;
+  --text-1-line-height: 16px;
+}
+
+.radix-themes {
+  --default-font-family: var(--font-family-sans);
+  --heading-font-family: var(--font-family-sans);
+}
+
+@utility text-2-bold {
+  font-family: var(--font-family-sans);
+  font-size: var(--text-2-size);
+  font-weight: 500;
+  line-height: var(--text-2-line-height);
+  letter-spacing: 0;
+}
+
+@utility text-2-normal {
+  font-family: var(--font-family-sans);
+  font-size: var(--text-2-size);
+  font-weight: 400;
+  line-height: var(--text-2-line-height);
+  letter-spacing: 0;
+}
+
+@utility text-1-bold {
+  font-family: var(--font-family-sans);
+  font-size: var(--text-1-size);
+  font-weight: 500;
+  line-height: var(--text-1-line-height);
+  letter-spacing: 0;
+}
+
+@utility text-1-normal {
+  font-family: var(--font-family-sans);
+  font-size: var(--text-1-size);
+  font-weight: 400;
+  line-height: var(--text-1-line-height);
+  letter-spacing: 0;
+}
